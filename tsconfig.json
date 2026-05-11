@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "lib": ["DOM", "DOM.Iterable", "ES2018"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "plugins": [
+      { "name": "next" }
+    ],
+    "paths": {
+      "@/*": ["src/*"],
+      "@/components/*": ["src/components/*"],
+      "@/core/*": ["src/core/*"],
+      "@/hooks/*": ["src/core/hooks/*"],
+      "@/hooks/ui/*": ["src/core/hooks/ui/*"],
+      "@/hooks/system/*": ["src/core/hooks/system/*"],
+      "@/hooks/common/*": ["src/core/hooks/common/*"],
+      "@/hooks/api/*": ["src/core/hooks/api/*"],
+      "@/constants/*": ["src/core/constants/*"],
+      "@/utils/*": ["src/core/utils/*"],
+      "@/lib/*": ["src/core/lib/*"],
+      "@/motions/*": ["src/core/motions/*"],
+      "@/types/*": ["src/core/types/*"],
+      "@/styles/*": ["src/core/styles/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/components/features/products/create/AttributesProduct/AttributesModal.tsx"
+  ],
+  "exclude": ["node_modules"]
+}

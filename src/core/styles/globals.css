@@ -1,0 +1,107 @@
+@import "./packages.css";
+@import "./tree.css";
+@import "./fonts.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* 🌗 Backgrounds */
+  --color-bg: #ffffff; /* اصلی */
+  --color-surface: #f5f5f4; /* پس زمینه کمی روشن */
+
+  /* ⚪ Neutral / Gray */
+  --color-gray-lightest: #f8fafc; /* خاکستری خیلی روشن */
+  --color-gray-lighter: #eaebed; /* خاکستری کم رنگ */
+
+  /* 🎨 Primary (Purple) */
+  --color-primary: #9333ea;
+  --color-primary-light: #f3e8ff;
+
+  /* 🌤️ Secondary (Sky Blue) */
+  --color-secondary: #0284c7;
+  --color-secondary-light: #e0f2fe;
+
+  /* 🖋 Text */
+  --color-text-primary: #1f1f1f;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #6b7280;
+
+  /* 🔘 Border */
+  --color-border: #e5e7eb;
+
+  --error: #fee7ef;
+}
+
+@layer base {
+  html {
+    @apply !bg-gray-100;
+    scrollbar-gutter: stable both-edges;
+    scroll-behavior: smooth;
+  }
+
+  :where(*):not(.ltr, .ltr *) {
+    direction: rtl;
+  }
+
+  * {
+    font-family: Dana-DemiBold !important;
+  }
+
+  body {
+    @apply max-w-[1120px] mx-auto p-0 m-0 box-border min-h-[100vh] h-full font-[Dana-DemiBold] bg-gray-100 text-sm;
+    font-feature-settings: "ss01", "ss02", "locl";
+  }
+
+  input:focus {
+    @apply outline-none;
+  }
+
+  /* Scrollbar Global Styles */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #c9c9c9;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b1b1b1;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+}
+
+@layer utilities {
+  .is-loading {
+    @apply animate-pulse cursor-default pointer-events-none select-none;
+  }
+
+  /* کلاس والد */
+  .hover-reveal-parent {
+    @apply relative;
+  }
+
+  /* کلاس فرزند: دکمه حذف یا هر المان دیگری که روی هاور ظاهر شود */
+  .hover-reveal-child {
+    @apply absolute top-2.5 left-2.5 z-50 opacity-0 pointer-events-none transition-all duration-200;
+  }
+
+  /* حالت hover والد */
+  .hover-reveal-parent:hover .hover-reveal-child {
+    @apply opacity-100 pointer-events-auto;
+  }
+
+  .deselect-icon {
+    @apply hover-reveal-child bg-slate-100 rounded-full text-xl p-1.5 hover:bg-red-50 hover:text-red-600 transition-all;
+  }
+
+  .deselect-icon-show {
+    @apply bg-slate-100 rounded-full text-xl p-1.5 hover:bg-red-50 hover:text-red-600 transition-all;
+  }
+}

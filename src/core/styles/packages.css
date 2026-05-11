@@ -1,0 +1,42 @@
+.tabs-site div {
+  width: 100% !important;
+}
+
+[data-slot="input-wrapper"],
+[data-slot="trigger"] {
+  background-color: white !important;
+  transition-property: all !important;
+  transition-duration: 150ms !important;
+  box-shadow: none !important;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem !important;
+  height: 48px !important;
+}
+
+[data-slot="input"] {
+  font-size: 13px !important;
+  color: #334155 !important;
+}
+
+[data-slot="input"]::placeholder {
+  font-size: 13px !important;
+  color: rgb(153, 153, 153) !important;
+}
+
+[data-slot="label"] {
+  text-align: right;
+  margin-top: -7px;
+  font-size: 13px !important;
+  color: #334155 !important;
+}
+
+/* حالت hover */
+[data-slot="input-wrapper"]:hover {
+  background-color: transparent !important;
+}
+
+/* حالت focus */
+[data-slot="input-wrapper"]:focus-within {
+  border-color: #0ea5e9 !important;
+  background-color: transparent !important;
+}
