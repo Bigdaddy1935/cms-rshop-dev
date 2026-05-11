@@ -52,7 +52,6 @@ const Collections = () => {
             key={index}
             collection={coll}
             onEdit={() => {
-              console.log("VVVVVVVVVV", coll);
               setEditSection(coll)
               setIsOpen(true)
             }}

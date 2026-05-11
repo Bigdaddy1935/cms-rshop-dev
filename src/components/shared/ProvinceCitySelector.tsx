@@ -102,7 +102,6 @@ const ProvinceCitySelector = ({
     });
   }, [selectedProvinceId, selectedCity, provinceOptions, cityOptions]);
 
-  console.log("selectedCityId =>", selectedCityId);
 
   if (provincesLoading || citiesLoading) {
     return (
@@ -143,7 +142,6 @@ const ProvinceCitySelector = ({
           const findedCity = citiesData?.data.find(
             (city: any) => city.city_id === Number(id),
           );
-          console.log("DDDDDDDDDDDD", findedCity);
 
           setSelectedCity(String(numId));
           onCityId?.(Number(findedCity?.city_id));

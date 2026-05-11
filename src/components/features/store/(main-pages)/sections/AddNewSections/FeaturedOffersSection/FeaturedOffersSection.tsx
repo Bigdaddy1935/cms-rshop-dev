@@ -23,7 +23,6 @@ const FeaturedOffersSection: React.FC<SectionIsFeaturedProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: deleteHomeSection } = useDeleteHomeSection();  
 
-  console.log("featuredSection =>", featuredSection);
   
 
   return (

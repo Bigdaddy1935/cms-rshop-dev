@@ -56,7 +56,6 @@ const UserAddressModal: React.FC<UserAddressModalProps> = ({
   }, [defaultData]);
 
   useEffect(() => {
-    console.log("form =>", form);
   }, [form]);
 
   const handleSubmit = () => {
@@ -173,7 +172,6 @@ const UserAddressModal: React.FC<UserAddressModalProps> = ({
           cityId={form.city_id}
           onChange={({ province, city }) => {
             if (province.length && city.length) {
-              console.log("HHHHHH =>", province, city);
               setForm((prev) => ({ ...prev, province, city }));
             }
           }}

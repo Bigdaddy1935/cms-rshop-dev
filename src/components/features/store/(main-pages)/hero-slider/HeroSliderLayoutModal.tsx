@@ -36,7 +36,6 @@ const HeroSliderLayoutModal: React.FC<HeroSliderLayoutModalProps> = ({
     );
   };
 
-  console.log("sliders =>", sliders);
   
 
   return (

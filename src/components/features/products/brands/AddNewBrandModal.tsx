@@ -119,7 +119,6 @@ const AddNewBrandModal: React.FC<Props> = ({
           changeStatusFile={form.logo}
           defaultImg={form.logo}
           onFile={(file) => {
-            console.log("file =>", file);
             handleFieldChange("logo", file)
           }}
           errorMessage={errors.logo}

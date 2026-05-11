@@ -125,7 +125,6 @@ const ProductInitialForm: React.FC<ProductInitialFormProps> = ({
       ...other,
     };
 
-    console.log("Result =>", result);
 
     if (!id) {
       createProduct(result, {
@@ -342,7 +341,6 @@ const ProductInitialForm: React.FC<ProductInitialFormProps> = ({
           mode2Title="محصول نیاز به زمان آماده‌سازی دارد"
           value={form.is_same_day_shipping}
           onChange={(val: any) => {
-            console.log("isPreparation => ", val);
 
             handleMultipleFieldsChange({
               requires_preparation: !val,
