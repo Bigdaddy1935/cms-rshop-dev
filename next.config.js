@@ -19,10 +19,13 @@ const nextConfig = {
       : false,
   },
   async rewrites() {
+    const apiBase =
+      process.env.NEXT_PUBLIC_API_URL ||
+      "https://app-backend-rshop-nodejs.roohbakhshac.com";
     return [
       {
         source: "/api/:path*",
-        destination: "https://app-backend-rshop-nodejs.roohbakhshac.com/api/:path*",
+        destination: `${apiBase}/api/:path*`,
       },
     ];
   },
