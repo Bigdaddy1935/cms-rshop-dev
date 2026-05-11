@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export const useFetchOnEdit = <T = any>(
-  queryFn: (id: number) => any,
+  queryFn: (id?: number) => any,
   paramName = "edit_id"
 ) => {
   const router = useRouter();
@@ -23,7 +23,14 @@ export const useFetchOnEdit = <T = any>(
     }
   }, [idParam, router]);
 
-  const query = editId !== null ? queryFn(editId) : null;
+  // ⚠️ React Hooks rules: queryFn must be called unconditionally and
+  // in the same order on every render. The earlier
+  //   `editId !== null ? queryFn(editId) : null`
+  // changed the hook order between renders and triggered
+  // 'change in order of Hooks called by CreateNewProduct'.
+  // queryFn is expected to gate via `enabled: !!id` (useGetOneProduct
+  // already does), so calling it unconditionally is safe.
+  const query = queryFn(editId ?? undefined);
 
   return {
     data: query?.data?.data as T | null,
