@@ -199,6 +199,23 @@ export default function FinanceProComplete() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 p-6 md:p-8">
       <div className="max-w-screen-2xl mx-auto space-y-10">
 
+        {/* بنر هشدار — تمام داده‌های این صفحه ماک (نمونه) هستن و به API وصل نیستن.
+            بعد از اتصال به سرویس واقعی finance این بنر را حذف کنید. */}
+        <div className="rounded-2xl border-2 border-amber-300 bg-amber-50 px-6 py-4 shadow-sm">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">⚠️</span>
+            <div>
+              <p className="font-bold text-amber-900">
+                داده‌های نمایش‌داده‌شده در این صفحه نمونه (Demo) هستند
+              </p>
+              <p className="text-sm text-amber-800 mt-1">
+                هنوز به API واقعی متصل نشده‌اند. ارقام درآمد، سفارش، تسویه، ترافیک و … همگی ثابت/تولیدشده‌اند.
+                قبل از اتکا به این داده‌ها برای تصمیم‌گیری مالی، اتصال به backend را تکمیل کنید.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* هدر */}
         <div className="flex flex-col lg:flex-row justify-between items-start gap-6 bg-white rounded-3xl shadow-xl p-8">
           <div>
