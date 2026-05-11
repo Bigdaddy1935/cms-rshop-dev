@@ -2,6 +2,17 @@
 
 import { toast } from "react-hot-toast";
 
+export class FetcherError extends Error {
+  status: number;
+  payload: any;
+  constructor(message: string, status: number, payload: any) {
+    super(message);
+    this.name = "FetcherError";
+    this.status = status;
+    this.payload = payload;
+  }
+}
+
 type FetcherProps = {
   route: string;
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -10,7 +21,13 @@ type FetcherProps = {
   loadingText?: string;
   successText?: string;
   credentials?: "same-origin" | "omit" | "include";
-  isActiveToast?: boolean
+  isActiveToast?: boolean;
+  /**
+   * When true, fetcher throws FetcherError on non-2xx responses instead
+   * of returning { data: null, ok: false }. Use this from React Query
+   * queryFn/mutationFn so isError surfaces correctly.
+   */
+  throwOnError?: boolean;
 };
 
 export const fetcher = async ({
@@ -21,14 +38,14 @@ export const fetcher = async ({
   loadingText = "در حال ارسال...",
   successText,
   credentials = "include",
-  isActiveToast = false
+  isActiveToast = false,
+  throwOnError = false,
 }: FetcherProps): Promise<{ data: any; ok: boolean }> => {
 
   const toastId = isActiveToast && toast.loading(loadingText);
   const isFormData = body instanceof FormData;
 
   try {
-    //const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${route}`, {
     const res = await fetch(`/api${route}`, {
       method,
       headers: {
@@ -38,17 +55,15 @@ export const fetcher = async ({
       body: isFormData ? body : body ? JSON.stringify(body) : undefined,
       credentials
     });
-    
+
     const data = await res.json();
     toastId && toast.dismiss(toastId);
 
     if (!res.ok) {
       toast.error(data.message || "خطا در عملیات");
-      // NOTE: fetcher swallows HTTP errors instead of throwing, so callers
-      // wrapping this in React Query's queryFn never get isError=true. If
-      // you're adding a NEW hook, check the `ok` field yourself OR throw
-      // inside the queryFn. Reworking every existing call site to the
-      // throw-on-error contract is tracked separately.
+      if (throwOnError) {
+        throw new FetcherError(data.message || "Request failed", res.status, data);
+      }
       return { data: null, ok: false };
     }
 
@@ -56,7 +71,23 @@ export const fetcher = async ({
     return { data: data.data, ok: true };
   } catch (err: any) {
     toastId && toast.dismiss(toastId);
+    if (err instanceof FetcherError) {
+      throw err;
+    }
     toast.error(err.message || "خطای اتصال به سرور");
+    if (throwOnError) {
+      throw new FetcherError(err.message || "Network error", 0, null);
+    }
     return { data: null, ok: false };
   }
+};
+
+/**
+ * React Query-friendly wrapper: returns the response payload directly
+ * (no { data, ok } envelope) and throws FetcherError on failure so
+ * isError/isPending/onError reflect reality.
+ */
+export const queryFetch = async <T = any>(args: Omit<FetcherProps, "throwOnError">): Promise<T> => {
+  const result = await fetcher({ ...args, throwOnError: true });
+  return result.data as T;
 };
