@@ -44,6 +44,11 @@ export const fetcher = async ({
 
     if (!res.ok) {
       toast.error(data.message || "خطا در عملیات");
+      // NOTE: fetcher swallows HTTP errors instead of throwing, so callers
+      // wrapping this in React Query's queryFn never get isError=true. If
+      // you're adding a NEW hook, check the `ok` field yourself OR throw
+      // inside the queryFn. Reworking every existing call site to the
+      // throw-on-error contract is tracked separately.
       return { data: null, ok: false };
     }
 

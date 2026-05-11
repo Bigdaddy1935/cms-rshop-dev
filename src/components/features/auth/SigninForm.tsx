@@ -42,14 +42,8 @@ const SigninForm = () => {
   const requestOtpMutation = useRequestOtpMutation();
   const verifyOtpMutation = useVerifyOtpMutation();
 
-  const requesting =
-    (requestOtpMutation as any)?.isPending ??
-    (requestOtpMutation as any)?.isLoading ??
-    false;
-  const verifying =
-    (verifyOtpMutation as any)?.isPending ??
-    (verifyOtpMutation as any)?.isLoading ??
-    false;
+  const requesting = requestOtpMutation.isPending;
+  const verifying = verifyOtpMutation.isPending;
 
   useEffect(() => {
     if (phoneValue.length === 11) {

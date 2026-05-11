@@ -21,7 +21,7 @@ const UserBoxUploader: React.FC<Props> = ({
   defaultImg,
   errorMessage,
 }) => {
-  const { imageFile, inputRef, handleImageClick, handleImageChange } =
+  const { imageFile, previewUrl, inputRef, handleImageClick, handleImageChange } =
     useImageUploader({
       onFile,
       changeStatusFile,
@@ -44,13 +44,9 @@ const UserBoxUploader: React.FC<Props> = ({
         />
 
         <div className="w-full h-full flex items-center justify-center rounded-full">
-          {imageFile ? (
+          {imageFile && previewUrl ? (
             <img
-              src={
-                typeof imageFile === "object"
-                  ? URL.createObjectURL(imageFile)
-                  : imageFile
-              }
+              src={previewUrl}
               alt="preview"
               className="w-full h-full object-cover group-hover:scale-125 transition-all"
             />

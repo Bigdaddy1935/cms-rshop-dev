@@ -38,9 +38,11 @@ function exportToCSV(filename: string, rows: any[], columns: string[]) {
   const csv = rows.map(row => columns.map(col => `"${(row[col] ?? "").toString().replace(/"/g, '""')}"`).join(",")).join("\n");
   const blob = new Blob(["\uFEFF" + header + csv], { type: "text/csv;charset=utf-8;" });
   const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
+  const url = URL.createObjectURL(blob);
+  link.href = url;
   link.download = filename;
   link.click();
+  URL.revokeObjectURL(url);
 }
 
 // ---------- داده‌های ماک کامل ----------

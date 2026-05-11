@@ -1,24 +1,27 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   logging: {
     fetches: {
       hmrRefreshes: true,
     },
   },
-  /* typescript: {
-    ignoreBuildErrors: true,
-  }, */
-  logging: false,
   images: {
-    domains: ["dl.poshtybanman.ir"],
+    remotePatterns: [
+      { protocol: "https", hostname: "dl.poshtybanman.ir" },
+      { protocol: "https", hostname: "dl.roohbakhshac.com" },
+      { protocol: "https", hostname: "dl.roohbakhshac.ir" },
+    ],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production"
+      ? { exclude: ["error", "warn"] }
+      : false,
   },
   async rewrites() {
     return [
       {
         source: "/api/:path*",
-        //destination: "http://172.18.100.42:3000/api/:path*",
-        //destination: "http://192.168.0.182:3000/api/:path*",
         destination: "https://app-backend-rshop-nodejs.roohbakhshac.com/api/:path*",
       },
     ];

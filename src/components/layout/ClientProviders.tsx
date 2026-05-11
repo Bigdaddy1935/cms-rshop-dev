@@ -12,11 +12,26 @@ export default function ClientProviders({
 }: {
   children: React.ReactNode;
 }) {
-  const [queryClient] = useState(() => new QueryClient());
-  
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
+            gcTime: 5 * 60 * 1000,
+            refetchOnWindowFocus: false,
+            retry: 1,
+          },
+          mutations: {
+            retry: 0,
+          },
+        },
+      }),
+  );
+
   return (
     <QueryClientProvider client={queryClient}>
-      <HeroUIProvider locale="fa-IR"> {/* navigate={router.push} */}
+      <HeroUIProvider locale="fa-IR">
         {children}
       </HeroUIProvider>
     </QueryClientProvider>

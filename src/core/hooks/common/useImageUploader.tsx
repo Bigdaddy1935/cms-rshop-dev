@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { compressImageFile } from "@/utils/compressImageFile";
 
 type UseImageUploaderProps = {
@@ -23,6 +23,21 @@ export const useImageUploader = ({
     else setImageFile(null);
   }, [changeStatusFile, defaultImg]);
 
+  // Materialize blob URL once per File; revoke on cleanup to avoid leaking
+  // every preview into the browser's blob store.
+  const previewUrl = useMemo(() => {
+    if (imageFile && typeof imageFile === "object") {
+      return URL.createObjectURL(imageFile);
+    }
+    return typeof imageFile === "string" ? imageFile : null;
+  }, [imageFile]);
+
+  useEffect(() => {
+    if (previewUrl && previewUrl.startsWith("blob:")) {
+      return () => URL.revokeObjectURL(previewUrl);
+    }
+  }, [previewUrl]);
+
   const handleImageClick = useCallback(() => {
     inputRef.current?.click();
   }, []);
@@ -42,6 +57,7 @@ export const useImageUploader = ({
 
   return {
     imageFile,
+    previewUrl,
     inputRef,
     handleImageClick,
     handleImageChange,

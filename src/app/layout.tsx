@@ -9,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fa">
+    <html lang="fa" dir="rtl">
       <head>
         <link
           rel="preload"
