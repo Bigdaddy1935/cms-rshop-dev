@@ -74,6 +74,18 @@ export const fetcher = async ({
     if (err instanceof FetcherError) {
       throw err;
     }
+    // Browser-aborted fetches (React Query unmount, route change,
+    // page navigation) throw DOMException with name "AbortError".
+    // That's a deliberate cancel, not a network error — surfacing
+    // "خطای اتصال به سرور" toasts during normal navigation spams
+    // the admin UI. Drop silently.
+    const isAbort =
+      err?.name === "AbortError" ||
+      err?.code === "ABORT_ERR" ||
+      err?.code === 20;
+    if (isAbort) {
+      return { data: null, ok: false };
+    }
     toast.error(err.message || "خطای اتصال به سرور");
     if (throwOnError) {
       throw new FetcherError(err.message || "Network error", 0, null);
