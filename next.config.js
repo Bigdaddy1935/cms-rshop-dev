@@ -21,7 +21,7 @@ const nextConfig = {
   async rewrites() {
     const apiBase =
       process.env.NEXT_PUBLIC_API_URL ||
-      "https://app-backend-rshop-nodejs.roohbakhshac.com";
+      "https://api.rshop.roohbakhshac.ir";
     return [
       {
         source: "/api/:path*",
