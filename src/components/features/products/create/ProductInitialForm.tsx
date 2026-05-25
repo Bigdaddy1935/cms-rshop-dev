@@ -108,10 +108,10 @@ const ProductInitialForm: React.FC<ProductInitialFormProps> = ({
     } = form;
 
     const result: any = {
-      discount_percent: data.variants?.length
+      discount_percent: data?.variants?.length
         ? 0
         : (discount_percent && +discount_percent) || 0,
-      discount_amount: data.variants?.length
+      discount_amount: data?.variants?.length
         ? 0
         : (discount_amount && +discount_amount) || 0,
       helper_id: !helper_id ? null : +helper_id,
