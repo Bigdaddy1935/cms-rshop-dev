@@ -1,10 +1,8 @@
 import { Alert } from "@heroui/react";
 import FormActionButtons from "@/components/common/FormActionButtons";
 import { useUpdateOrderStatus } from "@/core/hooks/api/orders/useOrder";
-import { useRouter } from "next/navigation";
 
 const PendingApprovalStep = ({ order }: { order: any }) => {
-  const router = useRouter()
   const updateOrderStatus = useUpdateOrderStatus();
 
   const acceptOrder = () => {
@@ -28,10 +26,8 @@ const PendingApprovalStep = ({ order }: { order: any }) => {
       </p>
 
       <FormActionButtons
-        onCancel={() => router.push('/admin/orders')}
         onSubmit={acceptOrder}
         isSubmitting={false}
-        cancelText="عدم تأیید"
         submitText="تأیید سفارش"
       />
     </div>

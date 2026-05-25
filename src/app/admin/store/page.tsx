@@ -253,7 +253,7 @@ const Settings: React.FC = () => {
           ))}
         </BaseCard>
 
-{/*         <BaseCard
+        <BaseCard
           className="shadow-md mx-auto sm:mx-0 max-w-[392px] w-full rounded-2xl"
           CardHeaderProps={{
             title: "تنظیمات پروموشن ها",
@@ -272,7 +272,7 @@ const Settings: React.FC = () => {
               />
             </div>
           ))}
-        </BaseCard> */}
+        </BaseCard>
       </div>
     </>
   );
