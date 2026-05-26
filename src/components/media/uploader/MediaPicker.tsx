@@ -5,7 +5,6 @@ import { LuImagePlus } from "react-icons/lu";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import toast from "react-hot-toast";
 import OptionButton from "@/components/ui/buttons/OptionButton";
-import { compressImageFile } from "@/utils/compressImageFile";
 
 interface Props {
   onSelect: (files: File[]) => void;
@@ -31,7 +30,7 @@ const MediaPicker: React.FC<Props> = ({ onSelect }) => {
 
     const type = currentType.current;
     const maxFiles = type === "image" ? 10 : 5;
-    const maxSize = type === "image" ? 100 * 1024 : 50 * 1024 * 1024;
+    const maxSize = type === "image" ? 500 * 1024 : 50 * 1024 * 1024;
 
     if (files.length > maxFiles) {
       toast.error(
@@ -41,39 +40,16 @@ const MediaPicker: React.FC<Props> = ({ onSelect }) => {
       return;
     }
 
-    if (type === "video") {
-      const validVideos = files.filter((file) => {
-        if (file.size > maxSize) {
-          toast.error(`حجم فایل "${file.name}" بیشتر از حد مجاز است`);
-          return false;
-        }
-        return true;
-      });
-
-      if (validVideos.length) onSelect(validVideos);
-      e.target.value = "";
-      return;
-    }
-
-    // image mode: compress all images
-    const processedImages = await Promise.all(
-      files.map(async (file) => {
-        if (file.size > maxSize || file.type !== "image/webp") {
-          return await compressImageFile(file);
-        }
-        return file;
-      })
-    );
-
-    const validImages = processedImages.filter((file) => {
+    // بررسی حجم فایل‌ها
+    const validFiles = files.filter((file) => {
       if (file.size > maxSize) {
-        toast.error(`حجم فایل "${file.name}" بعد از فشرده‌سازی هنوز زیاد است`);
+        toast.error(`حجم فایل "${file.name}" بیشتر از حد مجاز است`);
         return false;
       }
       return true;
     });
 
-    if (validImages.length) onSelect(validImages);
+    if (validFiles.length) onSelect(validFiles);
     e.target.value = "";
   };
 

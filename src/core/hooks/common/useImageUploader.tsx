@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { compressImageFile } from "@/utils/compressImageFile";
 
 type UseImageUploaderProps = {
   onFile: (file: File) => void;
@@ -47,10 +46,9 @@ export const useImageUploader = ({
       const file = e.target.files?.[0];
       if (!file) return;
 
-      const processedFile = await compressImageFile(file);
-
-      setImageFile(processedFile);
-      onFile(processedFile);
+      // بدون فشرده‌سازی - استفاده مستقیم از فایل اصلی
+      setImageFile(file);
+      onFile(file);
     },
     [onFile]
   );
