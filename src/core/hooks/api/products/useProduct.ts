@@ -97,7 +97,6 @@ export const useProductUpdate = (id: number | null) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["all-products"] });
-      queryClient.invalidateQueries({ queryKey: ["one-product"] });
     },
   });
 };
