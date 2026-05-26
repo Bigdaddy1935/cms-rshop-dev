@@ -34,8 +34,8 @@ const MediaPicker: React.FC<Props> = ({ onSelect }) => {
 
     if (files.length > maxFiles) {
       toast.error(
-`        حداکثر ${maxFiles} ${type === "image" ? "تصویر" : "ویدیو"} میتوانید همزمان انتخاب کنید
-`      );
+        `حداکثر ${maxFiles} ${type === "image" ? "تصویر" : "ویدیو"} میتوانید همزمان انتخاب کنید`
+      );
       e.target.value = "";
       return;
     }
