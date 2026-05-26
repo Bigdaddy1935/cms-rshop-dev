@@ -93,11 +93,16 @@ export const useUpdateOrderStatus = () => {
         successText: "وضعیت سفارش با موفقیت بروزرسانی شد",
       });
     },
-    onSuccess: (_, variables) => {
-      // invalidate specific order and list
-      queryClient.invalidateQueries({ queryKey: ["one-order", variables.id] });
-      queryClient.invalidateQueries({
-        predicate: (query) => query.queryKey[0] === "all-orders",
+    onSuccess: () => {
+      // اینجا refetchType رو 'all' قرار دهید تا بلافاصله داده‌ها به‌روز شوند
+      queryClient.invalidateQueries({ 
+        queryKey: ["all-orders"],
+        refetchType: 'all',   // <-- اضافه کنید
+        exact: false
+      });
+      queryClient.invalidateQueries({ 
+        queryKey: ["one-order"],
+        refetchType: 'all'
       });
     },
   });
